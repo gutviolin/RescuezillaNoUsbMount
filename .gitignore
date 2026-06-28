@@ -1,0 +1,11 @@
+*.iso
+*.ISO
+*.img
+*.efi
+*.lz
+vmlinuz
+casper/
+live/
+boot/grub/
+.DS_Store
+
