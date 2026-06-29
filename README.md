@@ -1,19 +1,17 @@
-# Rescue ISO Secure Boot Tools
+# Rescuezilla Secure Boot Tools
 
-Small helper scripts for one-time UEFI boots of Rescuezilla or Clonezilla while Secure Boot remains enabled.
+Small helper scripts for one-time UEFI boots of Rescuezilla while Secure Boot remains enabled.
 
-These scripts were written for a Fedora UEFI system where the ISO files live in:
+These scripts were written for a Fedora UEFI system where the ISO file lives at:
 
 - `/home/sionlockett/Downloads/rescuezilla-2.6.2-64bit.resolute.iso`
-- `/home/sionlockett/Downloads/clonezilla-live-3.3.2-31-amd64.iso`
 
-The ISO files are intentionally not committed. GitHub rejects normal Git files over 100 MB, and these images are much larger.
+The ISO file is intentionally not committed. GitHub rejects normal Git files over 100 MB, and this image is much larger.
 
 ## Scripts
 
 - `setup-rescuezilla-one-shot.sh`: stages Rescuezilla signed EFI boot files plus kernel/initrd on the EFI System Partition, creates a one-time UEFI `BootNext` entry, and writes a cleanup script.
 - `cleanup-rescuezilla-one-shot.sh`: removes the staged Rescuezilla EFI files, restores the temporary Ubuntu GRUB config if needed, and removes the generated UEFI boot entry.
-- `setup-clonezilla-one-shot.sh`: stages Clonezilla files on the EFI System Partition and creates a one-time UEFI `BootNext` entry.
 
 ## Rescuezilla Usage
 
@@ -28,19 +26,9 @@ After returning to Fedora:
 sudo ./cleanup-rescuezilla-one-shot.sh
 ```
 
-## Clonezilla Usage
-
-```bash
-sudo ./setup-clonezilla-one-shot.sh
-systemctl reboot
-```
-
-The Clonezilla script prints its cleanup commands after setup.
-
 ## Notes
 
 - These scripts require root because they mount ISOs, write to `/boot/efi`, and use `efibootmgr`.
 - They require UEFI boot mode.
-- Secure Boot stays enabled; the scripts rely on the signed shim/GRUB/kernel included in the Rescuezilla or Clonezilla ISO.
+- Secure Boot stays enabled; the scripts rely on the signed shim/GRUB/kernel included in the Rescuezilla ISO.
 - Review the hardcoded ISO paths before using on another machine.
-
