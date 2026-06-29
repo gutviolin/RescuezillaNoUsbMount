@@ -1,9 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ISO_SRC="/home/sionlockett/Downloads/rescuezilla-2.6.2-64bit.resolute.iso"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+DEFAULT_ISO_NAME="rescuezilla-2.6.2-64bit.resolute.iso"
+DOWNLOADS_ISO="/home/sionlockett/Downloads/$DEFAULT_ISO_NAME"
+
+if [[ -f "$SCRIPT_DIR/$DEFAULT_ISO_NAME" ]]; then
+  ISO_SRC="$SCRIPT_DIR/$DEFAULT_ISO_NAME"
+elif mapfile -t SCRIPT_DIR_ISOS < <(find "$SCRIPT_DIR" -maxdepth 1 -type f -iname '*.iso' | sort) && [[ "${#SCRIPT_DIR_ISOS[@]}" -eq 1 ]]; then
+  ISO_SRC="${SCRIPT_DIR_ISOS[0]}"
+else
+  ISO_SRC="$DOWNLOADS_ISO"
+fi
+
 ISO_NAME="$(basename "$ISO_SRC")"
-ISO_SCAN_PATH="/home/sionlockett/Downloads/$ISO_NAME"
+ISO_SCAN_PATH="$ISO_SRC"
 MOUNT_POINT="/mnt/rescuezilla-iso"
 ESP="/boot/efi"
 ENTRY_LABEL="Rescuezilla Secure Boot"

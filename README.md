@@ -2,7 +2,8 @@
 
 Small helper scripts for one-time UEFI boots of Rescuezilla while Secure Boot remains enabled.
 
-These scripts were written for a Fedora UEFI system where the ISO file lives at:
+These scripts were written for a Fedora UEFI system. The setup script first looks
+for the Rescuezilla ISO in the same folder as the script, then falls back to:
 
 - `/home/sionlockett/Downloads/rescuezilla-2.6.2-64bit.resolute.iso`
 
@@ -31,4 +32,5 @@ sudo ./cleanup-rescuezilla-one-shot.sh
 - These scripts require root because they mount ISOs, write to `/boot/efi`, and use `efibootmgr`.
 - They require UEFI boot mode.
 - Secure Boot stays enabled; the scripts rely on the signed shim/GRUB/kernel included in the Rescuezilla ISO.
-- Review the hardcoded ISO paths before using on another machine.
+- Put the Rescuezilla ISO in the same folder as `setup-rescuezilla-one-shot.sh`,
+  or review the fallback ISO path before using on another machine.
